@@ -45,7 +45,7 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	
-	float dt = ft.Mark();
+	const float dt = ft.Mark();
 
 	if( gameIsStarted )
 	{
@@ -71,7 +71,7 @@ void Game::UpdateModel()
 			snekMoveCounter += dt * 60.0f;
 			if( snekMoveCounter > snekMovePeriod )
 			{
-				snekMoveCounter = 0;
+				snekMoveCounter -= snekMovePeriod;
 				const Location next = snek.GetNextHeadLocation( delta_loc );
 				if( !brd.IsInsideBoard( next ) ||
 					snek.IsInTileExceptEnd( next ) )
