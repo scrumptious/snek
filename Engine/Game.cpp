@@ -31,7 +31,7 @@ Game::Game( MainWindow& wnd )
 	snek( {2,2} ),
 	goal( rng,brd,snek )
 {
-	sndTitle.Play( 1.0f,1.0f );
+	sndTitle.Play( 1.0f,0.3f );
 }
 
 void Game::Go()
@@ -44,6 +44,9 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	
+	float dt = ft.Mark();
+
 	if( gameIsStarted )
 	{
 		if( !gameIsOver )
@@ -65,8 +68,8 @@ void Game::UpdateModel()
 				delta_loc = { 1,0 };
 			}
 
-			++snekMoveCounter;
-			if( snekMoveCounter >= snekMovePeriod )
+			snekMoveCounter += dt * 60.0f;
+			if( snekMoveCounter > snekMovePeriod )
 			{
 				snekMoveCounter = 0;
 				const Location next = snek.GetNextHeadLocation( delta_loc );
@@ -83,13 +86,13 @@ void Game::UpdateModel()
 					{
 						snek.GrowAndMoveBy( delta_loc );
 						goal.Respawn( rng,brd,snek );
-						sfxEat.Play( rng,0.8f );
+						sfxEat.Play( rng,0.5f );
 					}
 					else
 					{
 						snek.MoveBy( delta_loc );
 					}
-					sfxSlither.Play( rng,0.08f );
+					sfxSlither.Play( rng,0.02f );
 				}
 			}
 			++snekSpeedupCounter;
@@ -104,7 +107,7 @@ void Game::UpdateModel()
 	{
 		if( wnd.kbd.KeyIsPressed( VK_RETURN ) )
 		{
-			sndMusic.Play( 1.0f,0.6f );
+			sndMusic.Play( 1.0f,0.2f );
 			gameIsStarted = true;
 		}
 	}

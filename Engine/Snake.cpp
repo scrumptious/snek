@@ -94,7 +94,7 @@ void Snake::Segment::Follow( const Segment& next )
 
 void Snake::Segment::MoveBy( const Location& delta_loc )
 {
-	assert( abs( delta_loc.x ) + abs( delta_loc.y ) == 1 );
+	assert( abs( delta_loc.x ) + abs( delta_loc.y ) < 2 );
 	loc.Add( delta_loc );
 }
 
